@@ -89,30 +89,30 @@ The implementation is written in Python and uses:
 
 ## 4) Program Workflow (How the system works)
 
-b.**MCMC architecture optimization (Metropolis–Hastings)**
+**b. MCMC architecture optimization (Metropolis–Hastings)**
 
     - Starts from an initial valid architecture under given constraints (depth, neurons, activations).
     - Repeats: proposes a neighboring architecture → trains it under a fixed budget → evaluates on validation.
     - Accepts better candidates and sometimes worse ones (to escape local optima), while tracking the best architecture seen.
     
-c. **Applying the algorithm to a specific task**
+**c. Applying the algorithm to a specific task**
 
     - Loads and preprocesses the dataset, then defines the target metric.
     - Runs the MCMC loop on this task and outputs the best architecture + key metrics.
 
-d. **Two evaluation budgets: fixed epochs vs fixed time**
+**d. Two evaluation budgets: fixed epochs vs fixed time**
 
     - Fixed epochs: every candidate trains for the same number of epochs (consistent training steps).
     - Fixed time: every candidate trains for the same wall‑clock time (fair compute budget).
 
       The program can compare the best results achieved in both modes.
 
-e. **Optional move: change a layer activation**
+**e. Optional move: change a layer activation**
 
     - Randomly selects a layer and swaps its activation from an allowed set (e.g., ReLU ↔ Tanh).
     - This lets the search improve training dynamics without changing layer sizes.
 
-f. **Optional move: change network depth**
+**f. Optional move: change network depth**
 
     - Proposes adding or removing a hidden layer (within min/max depth limits).
     - This enables exploring “shallow‑wide” vs “deep‑narrow” architectures during the same search.
